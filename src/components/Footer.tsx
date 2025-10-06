@@ -47,10 +47,15 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center relative">
           <p className="text-gray-400">
             © 2025 Greenhouse Business Development. All rights reserved.
           </p>
+          <a
+            href="/admin"
+            className="absolute bottom-0 right-4 w-2 h-2 bg-gray-700 rounded-full opacity-30 hover:opacity-100 hover:bg-brand-teal transition-all duration-300"
+            aria-label="Admin"
+          />
         </div>
       </div>
     </footer>
