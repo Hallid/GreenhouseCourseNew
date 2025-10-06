@@ -12,7 +12,7 @@ export function Header() {
     <header className="bg-white shadow-sm border-b-2 border-brand-teal">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center bg-white p-2 rounded-lg shadow-sm">
             <img
               src="/WhatsApp Image 2025-10-04 at 21.11.12_b8120d5e copy.jpg"
               alt="Greenhouse Business Development"

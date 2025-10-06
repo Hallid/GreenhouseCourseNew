@@ -58,11 +58,13 @@ export function HomePage() {
               </Link>
             </div>
             <div className="flex justify-center">
-              <img
-                src="/Gemini_Generated_Image_cl7ak8cl7ak8cl7a.png"
-                alt="Greenhouse Business Development - Empowering Growth"
-                className="rounded-xl shadow-2xl w-full max-w-lg ring-4 ring-brand-teal/20"
-              />
+              <div className="bg-white p-6 rounded-xl shadow-2xl ring-4 ring-brand-teal/20">
+                <img
+                  src="/Gemini_Generated_Image_cl7ak8cl7ak8cl7a.png"
+                  alt="Greenhouse Business Development - Empowering Growth"
+                  className="rounded-lg w-full max-w-lg"
+                />
+              </div>
             </div>
           </div>
         </div>
