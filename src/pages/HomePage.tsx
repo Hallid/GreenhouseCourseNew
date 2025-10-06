@@ -85,40 +85,40 @@ export function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="bg-gradient-to-br from-brand-teal to-brand-green w-16 h-16 rounded-lg flex items-center justify-center mb-6">
-                <Award className="h-8 w-8 text-brand-teal" />
+              <div className="bg-gradient-to-br from-brand-teal to-brand-green w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-lg">
+                <Award className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 Fully Accredited
               </h3>
               <p className="text-gray-600">
-                All our courses are officially accredited and recognized by relevant 
+                All our courses are officially accredited and recognized by relevant
                 industry bodies, ensuring your certification has real value.
               </p>
             </div>
 
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="bg-gradient-to-br from-brand-teal to-brand-green w-16 h-16 rounded-lg flex items-center justify-center mb-6">
-                <Users className="h-8 w-8 text-brand-teal" />
+              <div className="bg-gradient-to-br from-brand-green to-brand-green-light w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-lg">
+                <Users className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 Expert Instructors
               </h3>
               <p className="text-gray-600">
-                Learn from industry professionals with real-world experience and 
+                Learn from industry professionals with real-world experience and
                 deep expertise in business development and workplace skills.
               </p>
             </div>
 
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="bg-gradient-to-br from-brand-teal to-brand-green w-16 h-16 rounded-lg flex items-center justify-center mb-6">
-                <BookOpen className="h-8 w-8 text-brand-teal" />
+              <div className="bg-gradient-to-br from-brand-orange to-brand-orange-light w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-lg">
+                <BookOpen className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 Practical Learning
               </h3>
               <p className="text-gray-600">
-                Our curriculum focuses on practical, actionable skills that you can 
+                Our curriculum focuses on practical, actionable skills that you can
                 immediately apply in your workplace or business ventures.
               </p>
             </div>
