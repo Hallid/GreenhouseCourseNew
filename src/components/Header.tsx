@@ -52,12 +52,6 @@ export function Header() {
             >
               Contact
             </Link>
-            <Link
-              to="/admin"
-              className="px-4 py-2 bg-brand-teal text-white text-sm font-medium rounded-lg hover:bg-[#188770] transition-colors"
-            >
-              Admin
-            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -101,13 +95,6 @@ export function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Contact
-              </Link>
-              <Link
-                to="/admin"
-                className="block px-3 py-2 bg-brand-teal text-white text-base font-medium rounded-lg hover:bg-[#188770] transition-colors mx-3"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Admin Login
               </Link>
             </div>
           </div>
