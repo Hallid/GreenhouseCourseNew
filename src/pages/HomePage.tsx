@@ -6,7 +6,7 @@ export function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-600 to-green-700 text-white py-20">
+      <section className="bg-gradient-to-r from-brand-teal to-[#188770] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
@@ -18,7 +18,7 @@ export function HomePage() {
             </p>
             <Link
               to="/courses"
-              className="inline-flex items-center px-8 py-4 bg-white text-green-600 font-semibold text-lg rounded-lg hover:bg-gray-50 transition-colors transform hover:scale-105"
+              className="inline-flex items-center px-8 py-4 bg-white text-brand-teal font-semibold text-lg rounded-lg hover:bg-gray-50 transition-colors transform hover:scale-105"
             >
               Explore Our Accredited Courses
               <ArrowRight className="ml-2 h-6 w-6" />
@@ -48,7 +48,7 @@ export function HomePage() {
               </p>
               <Link
                 to="/contact"
-                className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
+                className="inline-flex items-center px-6 py-3 bg-brand-teal text-white font-semibold rounded-lg hover:bg-[#188770] transition-colors"
               >
                 Get In Touch
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -74,7 +74,7 @@ export function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <div className="bg-green-100 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
-                <Award className="h-8 w-8 text-green-600" />
+                <Award className="h-8 w-8 text-brand-teal" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 Fully Accredited
@@ -87,7 +87,7 @@ export function HomePage() {
 
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <div className="bg-green-100 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
-                <Users className="h-8 w-8 text-green-600" />
+                <Users className="h-8 w-8 text-brand-teal" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 Expert Instructors
@@ -100,7 +100,7 @@ export function HomePage() {
 
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <div className="bg-green-100 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
-                <BookOpen className="h-8 w-8 text-green-600" />
+                <BookOpen className="h-8 w-8 text-brand-teal" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 Practical Learning
@@ -131,23 +131,23 @@ export function HomePage() {
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
                 Job Readiness
               </h3>
-              <p className="text-sm text-green-600 mb-3">SP-201201</p>
+              <p className="text-sm text-brand-teal mb-3">SP-201201</p>
               <p className="text-gray-600 mb-4">
                 Work-Ready Skills for a Thriving Economy - equipping learners with life skills and employability skills.
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-center text-sm text-gray-600">
-                  <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                  <CheckCircle className="h-4 w-4 text-brand-teal mr-2" />
                   NQF Level 2
                 </li>
                 <li className="flex items-center text-sm text-gray-600">
-                  <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                  <CheckCircle className="h-4 w-4 text-brand-teal mr-2" />
                   30 Credits
                 </li>
               </ul>
               <Link
                 to="/courses"
-                className="inline-flex items-center text-green-600 font-semibold hover:text-green-700"
+                className="inline-flex items-center text-brand-teal font-semibold hover:text-[#188770]"
               >
                 Learn More
                 <ArrowRight className="ml-1 h-4 w-4" />
@@ -158,23 +158,23 @@ export function HomePage() {
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
                 Workplace Essential Skills
               </h3>
-              <p className="text-sm text-green-600 mb-3">SP-211009</p>
+              <p className="text-sm text-brand-teal mb-3">SP-211009</p>
               <p className="text-gray-600 mb-4">
                 Build workplace effectiveness focusing on rights, responsibilities, performance, and teamwork for modern workplace demands.
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-center text-sm text-gray-600">
-                  <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                  <CheckCircle className="h-4 w-4 text-brand-teal mr-2" />
                   NQF Level 4
                 </li>
                 <li className="flex items-center text-sm text-gray-600">
-                  <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                  <CheckCircle className="h-4 w-4 text-brand-teal mr-2" />
                   20 Credits
                 </li>
               </ul>
               <Link
                 to="/courses"
-                className="inline-flex items-center text-green-600 font-semibold hover:text-green-700"
+                className="inline-flex items-center text-brand-teal font-semibold hover:text-[#188770]"
               >
                 Learn More
                 <ArrowRight className="ml-1 h-4 w-4" />
@@ -185,23 +185,23 @@ export function HomePage() {
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
                 New Venture Creation
               </h3>
-              <p className="text-sm text-green-600 mb-3">SP-2110010</p>
+              <p className="text-sm text-brand-teal mb-3">SP-2110010</p>
               <p className="text-gray-600 mb-4">
                 Develop entrepreneurial knowledge and skills to start, manage, and grow sustainable small businesses.
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-center text-sm text-gray-600">
-                  <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                  <CheckCircle className="h-4 w-4 text-brand-teal mr-2" />
                   NQF Level 2
                 </li>
                 <li className="flex items-center text-sm text-gray-600">
-                  <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                  <CheckCircle className="h-4 w-4 text-brand-teal mr-2" />
                   32 Credits
                 </li>
               </ul>
               <Link
                 to="/courses"
-                className="inline-flex items-center text-green-600 font-semibold hover:text-green-700"
+                className="inline-flex items-center text-brand-teal font-semibold hover:text-[#188770]"
               >
                 Learn More
                 <ArrowRight className="ml-1 h-4 w-4" />
@@ -212,7 +212,7 @@ export function HomePage() {
           <div className="text-center mt-12">
             <Link
               to="/courses"
-              className="inline-flex items-center px-8 py-4 bg-green-600 text-white font-semibold text-lg rounded-lg hover:bg-green-700 transition-colors"
+              className="inline-flex items-center px-8 py-4 bg-brand-teal text-white font-semibold text-lg rounded-lg hover:bg-[#188770] transition-colors"
             >
               View All Courses
               <ArrowRight className="ml-2 h-6 w-6" />

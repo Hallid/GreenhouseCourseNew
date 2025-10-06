@@ -50,7 +50,7 @@ export function AdminLogin() {
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-        redirectTo: `${window.location.origin}/admin`
+        redirectTo: 'https://greenhousebusinessdevelopment.co.za/admin'
       });
 
       if (error) throw error;
@@ -74,7 +74,7 @@ export function AdminLogin() {
           <div className="bg-white rounded-xl shadow-lg p-8">
             <div className="text-center mb-8">
               <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                <Mail className="h-8 w-8 text-green-600" />
+                <Mail className="h-8 w-8 text-brand-teal" />
               </div>
               <h1 className="text-2xl font-bold text-gray-900 mb-2">
                 Reset Password
@@ -86,7 +86,7 @@ export function AdminLogin() {
 
             {resetSent ? (
               <div className="text-center">
-                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
+                <div className="bg-teal-50 border border-teal-200 text-[#188770] px-4 py-3 rounded-lg mb-6">
                   Password reset email sent! Check your inbox and follow the instructions.
                 </div>
                 <button
@@ -95,7 +95,7 @@ export function AdminLogin() {
                     setResetSent(false);
                     setResetEmail('');
                   }}
-                  className="text-green-600 hover:text-green-700 font-medium"
+                  className="text-brand-teal hover:text-[#188770] font-medium"
                 >
                   Back to Login
                 </button>
@@ -118,7 +118,7 @@ export function AdminLogin() {
                     required
                     value={resetEmail}
                     onChange={(e) => setResetEmail(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent"
                     placeholder="admin@greenhousebiz.co.za"
                   />
                 </div>
@@ -126,7 +126,7 @@ export function AdminLogin() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full px-4 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                  className="w-full px-4 py-3 bg-brand-teal text-white font-semibold rounded-lg hover:bg-[#188770] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
                 >
                   {isLoading ? (
                     <>
@@ -145,7 +145,7 @@ export function AdminLogin() {
                   <button
                     type="button"
                     onClick={() => setShowForgotPassword(false)}
-                    className="text-green-600 hover:text-green-700 font-medium"
+                    className="text-brand-teal hover:text-[#188770] font-medium"
                   >
                     Back to Login
                   </button>
@@ -164,7 +164,7 @@ export function AdminLogin() {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <Lock className="h-8 w-8 text-green-600" />
+              <Lock className="h-8 w-8 text-brand-teal" />
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
               Admin Login
@@ -194,7 +194,7 @@ export function AdminLogin() {
                   required
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent"
                   placeholder="admin@example.com"
                 />
               </div>
@@ -212,7 +212,7 @@ export function AdminLogin() {
                   required
                   value={formData.password}
                   onChange={(e) => handleInputChange('password', e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent"
                   placeholder="Enter your password"
                 />
                 <button
@@ -228,7 +228,7 @@ export function AdminLogin() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full px-4 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+              className="w-full px-4 py-3 bg-brand-teal text-white font-semibold rounded-lg hover:bg-[#188770] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
@@ -248,7 +248,7 @@ export function AdminLogin() {
             <div className="text-center space-y-2">
               <button
                 onClick={() => setShowForgotPassword(true)}
-                className="text-green-600 hover:text-green-700 font-medium text-sm"
+                className="text-brand-teal hover:text-[#188770] font-medium text-sm"
               >
                 Forgot your password?
               </button>

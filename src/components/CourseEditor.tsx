@@ -76,7 +76,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
             onClick={() => setActiveSection('basic')}
             className={`px-4 py-3 font-medium transition-colors border-b-2 ${
               activeSection === 'basic'
-                ? 'border-green-600 text-green-600'
+                ? 'border-brand-teal text-brand-teal'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -87,7 +87,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
             onClick={() => setActiveSection('details')}
             className={`px-4 py-3 font-medium transition-colors border-b-2 ${
               activeSection === 'details'
-                ? 'border-green-600 text-green-600'
+                ? 'border-brand-teal text-brand-teal'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -98,7 +98,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
             onClick={() => setActiveSection('arrays')}
             className={`px-4 py-3 font-medium transition-colors border-b-2 ${
               activeSection === 'arrays'
-                ? 'border-green-600 text-green-600'
+                ? 'border-brand-teal text-brand-teal'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -126,7 +126,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                       required
                       value={formData.course_code}
                       onChange={(e) => updateField('course_code', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent text-base"
                       placeholder="e.g., SP-201201"
                     />
                   </div>
@@ -140,13 +140,13 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                       required
                       value={formData.course_name}
                       onChange={(e) => updateField('course_name', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent text-base"
                       placeholder="e.g., Job Readiness"
                     />
                   </div>
                 </div>
 
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <div className="bg-teal-50 border border-teal-200 rounded-lg p-4">
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     📅 Next Course Date *
                   </label>
@@ -157,7 +157,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                     type="date"
                     value={formData.upcoming_date}
                     onChange={(e) => updateField('upcoming_date', e.target.value)}
-                    className="w-full px-4 py-3 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-base font-medium"
+                    className="w-full px-4 py-3 border border-teal-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent text-base font-medium"
                     min={new Date().toISOString().split('T')[0]}
                   />
                 </div>
@@ -171,7 +171,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                       type="text"
                       value={formData.duration}
                       onChange={(e) => updateField('duration', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent text-base"
                       placeholder="e.g., 10 days"
                     />
                   </div>
@@ -184,7 +184,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                       type="text"
                       value={formData.nqf_level}
                       onChange={(e) => updateField('nqf_level', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent text-base"
                       placeholder="e.g., Level 2"
                     />
                   </div>
@@ -197,7 +197,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                       type="number"
                       value={formData.credits}
                       onChange={(e) => updateField('credits', parseInt(e.target.value) || 0)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent text-base"
                       placeholder="0"
                     />
                   </div>
@@ -211,7 +211,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                     type="text"
                     value={formData.accrediting_body}
                     onChange={(e) => updateField('accrediting_body', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent text-base"
                     placeholder="e.g., QCTO"
                   />
                 </div>
@@ -236,7 +236,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                   <textarea
                     value={formData.purpose}
                     onChange={(e) => updateField('purpose', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent text-base"
                     rows={8}
                     placeholder="Explain what this course aims to achieve..."
                   />
@@ -252,7 +252,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                   <textarea
                     value={formData.certification}
                     onChange={(e) => updateField('certification', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent text-base"
                     rows={5}
                     placeholder="Describe the certification..."
                   />
@@ -279,7 +279,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                     <button
                       type="button"
                       onClick={() => addArrayItem('target_audience')}
-                      className="flex items-center gap-1 text-sm text-green-600 hover:text-green-700 font-medium px-3 py-2 hover:bg-green-50 rounded-lg transition-colors"
+                      className="flex items-center gap-1 text-sm text-brand-teal hover:text-[#188770] font-medium px-3 py-2 hover:bg-teal-50 rounded-lg transition-colors"
                     >
                       <Plus className="h-4 w-4" /> Add Item
                     </button>
@@ -291,7 +291,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                         <button
                           type="button"
                           onClick={() => addArrayItem('target_audience')}
-                          className="mt-2 text-sm text-green-600 hover:text-green-700 font-medium"
+                          className="mt-2 text-sm text-brand-teal hover:text-[#188770] font-medium"
                         >
                           Add your first item
                         </button>
@@ -303,7 +303,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                             type="text"
                             value={item}
                             onChange={(e) => updateArrayField('target_audience', index, e.target.value)}
-                            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
+                            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent text-base"
                             placeholder="e.g., Unemployed youth"
                           />
                           <button
@@ -333,7 +333,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                       <button
                         type="button"
                         onClick={() => addArrayItem(field)}
-                        className="flex items-center gap-1 text-sm text-green-600 hover:text-green-700 font-medium px-3 py-2 hover:bg-green-50 rounded-lg transition-colors"
+                        className="flex items-center gap-1 text-sm text-brand-teal hover:text-[#188770] font-medium px-3 py-2 hover:bg-teal-50 rounded-lg transition-colors"
                       >
                         <Plus className="h-4 w-4" /> Add
                       </button>
@@ -345,7 +345,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                           <button
                             type="button"
                             onClick={() => addArrayItem(field)}
-                            className="mt-2 text-sm text-green-600 hover:text-green-700 font-medium"
+                            className="mt-2 text-sm text-brand-teal hover:text-[#188770] font-medium"
                           >
                             Add first item
                           </button>
@@ -357,7 +357,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
                               type="text"
                               value={item}
                               onChange={(e) => updateArrayField(field, index, e.target.value)}
-                              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-base"
+                              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent text-base"
                               placeholder={placeholder}
                             />
                             <button
@@ -388,7 +388,7 @@ export function CourseEditor({ course, onSave, onCancel, isSaving, isNew = false
             <button
               type="submit"
               disabled={isSaving || !formData.course_code || !formData.course_name}
-              className="flex-1 px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex-1 px-6 py-3 bg-brand-teal text-white font-semibold rounded-lg hover:bg-[#188770] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isSaving ? 'Saving...' : (isNew ? 'Add Course' : 'Save Changes')}
             </button>

@@ -52,7 +52,7 @@ export function ContactPage() {
               {/* Email */}
               <div className="flex items-start gap-4">
                 <div className="bg-green-100 p-3 rounded-lg">
-                  <Mail className="h-6 w-6 text-green-600" />
+                  <Mail className="h-6 w-6 text-brand-teal" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Email Address</h3>
@@ -66,7 +66,7 @@ export function ContactPage() {
               {/* Phone */}
               <div className="flex items-start gap-4">
                 <div className="bg-green-100 p-3 rounded-lg">
-                  <Phone className="h-6 w-6 text-green-600" />
+                  <Phone className="h-6 w-6 text-brand-teal" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Phone Number</h3>
@@ -80,7 +80,7 @@ export function ContactPage() {
               {/* WhatsApp */}
               <div className="flex items-start gap-4">
                 <div className="bg-green-100 p-3 rounded-lg">
-                  <MessageCircle className="h-6 w-6 text-green-600" />
+                  <MessageCircle className="h-6 w-6 text-brand-teal" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">WhatsApp</h3>
@@ -89,7 +89,7 @@ export function ContactPage() {
                     href="https://wa.me/27835979697"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-green-600 hover:text-green-700 font-medium mt-2"
+                    className="inline-flex items-center text-brand-teal hover:text-[#188770] font-medium mt-2"
                   >
                     Send WhatsApp Message
                     <MessageCircle className="ml-1 h-4 w-4" />
@@ -100,7 +100,7 @@ export function ContactPage() {
               {/* Office Hours */}
               <div className="flex items-start gap-4">
                 <div className="bg-green-100 p-3 rounded-lg">
-                  <Clock className="h-6 w-6 text-green-600" />
+                  <Clock className="h-6 w-6 text-brand-teal" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Office Hours</h3>
@@ -115,7 +115,7 @@ export function ContactPage() {
               {/* Location */}
               <div className="flex items-start gap-4">
                 <div className="bg-green-100 p-3 rounded-lg">
-                  <MapPin className="h-6 w-6 text-green-600" />
+                  <MapPin className="h-6 w-6 text-brand-teal" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Office Location</h3>
@@ -129,18 +129,18 @@ export function ContactPage() {
             </div>
 
             {/* Quick Course Information */}
-            <div className="mt-8 bg-green-50 rounded-lg p-6">
+            <div className="mt-8 bg-teal-50 rounded-lg p-6">
               <h3 className="font-semibold text-green-800 mb-3">
                 Looking for course information?
               </h3>
-              <p className="text-green-700 mb-4">
+              <p className="text-[#188770] mb-4">
                 Our three accredited courses cover workplace preparation, essential skills, 
                 and new venture creation. Each programme is designed to provide practical, 
                 applicable knowledge for career advancement.
               </p>
               <a
                 href="/courses"
-                className="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
+                className="inline-flex items-center text-brand-teal hover:text-[#188770] font-medium"
               >
                 View All Courses
                 <Send className="ml-1 h-4 w-4" />

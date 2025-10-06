@@ -157,7 +157,7 @@ export function AdminDashboard() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="flex items-center gap-3">
-          <RefreshCw className="h-6 w-6 animate-spin text-green-600" />
+          <RefreshCw className="h-6 w-6 animate-spin text-brand-teal" />
           <span className="text-gray-600">Loading dashboard...</span>
         </div>
       </div>
@@ -186,12 +186,12 @@ export function AdminDashboard() {
         <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <Calendar className="h-6 w-6 text-green-600" />
+              <Calendar className="h-6 w-6 text-brand-teal" />
               <h2 className="text-xl font-semibold text-gray-900">All Courses</h2>
             </div>
             <button
               onClick={() => setIsAddingCourse(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-brand-teal text-white rounded-lg hover:bg-[#188770] transition-colors"
             >
               <Plus className="h-4 w-4" />
               Add New Course
@@ -207,7 +207,7 @@ export function AdminDashboard() {
               </p>
               <button
                 onClick={() => setIsAddingCourse(true)}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                className="px-4 py-2 bg-brand-teal text-white rounded-lg hover:bg-[#188770] transition-colors"
               >
                 Add Course
               </button>
@@ -217,7 +217,7 @@ export function AdminDashboard() {
               {courses.map((course) => (
                 <div
                   key={course.id}
-                  className="border border-gray-200 rounded-lg p-6 hover:border-green-300 transition-colors"
+                  className="border border-gray-200 rounded-lg p-6 hover:border-teal-300 transition-colors"
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex-grow">
@@ -225,7 +225,7 @@ export function AdminDashboard() {
                         <h3 className="text-xl font-semibold text-gray-900">
                           {course.course_name}
                         </h3>
-                        <span className="text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">
+                        <span className="text-sm font-medium text-brand-teal bg-teal-50 px-3 py-1 rounded-full">
                           {course.course_code}
                         </span>
                       </div>
@@ -244,17 +244,17 @@ export function AdminDashboard() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-green-600" />
+                        <Calendar className="h-4 w-4 text-brand-teal" />
                         <span className="text-sm">
                           <span className="font-medium text-gray-700">Next Date:</span>{' '}
-                          <span className="text-green-600 font-semibold">{formatDate(course.upcoming_date)}</span>
+                          <span className="text-brand-teal font-semibold">{formatDate(course.upcoming_date)}</span>
                         </span>
                       </div>
                     </div>
                     <div className="flex gap-2 ml-4">
                       <button
                         onClick={() => setEditingCourse(course)}
-                        className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                        className="p-2 text-gray-400 hover:text-brand-teal hover:bg-teal-50 rounded-lg transition-colors"
                         title="Edit course"
                       >
                         <Edit2 className="h-5 w-5" />
@@ -299,7 +299,7 @@ export function AdminDashboard() {
           )}
         </div>
 
-        <div className="mt-8 bg-green-50 border border-green-200 rounded-xl p-6">
+        <div className="mt-8 bg-teal-50 border border-teal-200 rounded-xl p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Important Note</h3>
           <p className="text-gray-700">
             Course dates are the most important information for customers. Make sure to keep them up to date regularly.

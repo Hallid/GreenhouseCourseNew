@@ -263,7 +263,7 @@ export function CoursesPage() {
     return (
       <div className="py-12 flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-teal mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading courses...</p>
         </div>
       </div>
@@ -296,25 +296,25 @@ export function CoursesPage() {
                       <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
                         {course.title}
                       </h2>
-                      <span className="text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">
+                      <span className="text-sm font-medium text-brand-teal bg-teal-50 px-3 py-1 rounded-full">
                         {course.code}
                       </span>
                     </div>
                     <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3">
                       <div className="flex items-center gap-1">
-                        <Award className="h-4 w-4 text-green-600" />
+                        <Award className="h-4 w-4 text-brand-teal" />
                         <span>{course.nqfLevel}</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <BookOpen className="h-4 w-4 text-green-600" />
+                        <BookOpen className="h-4 w-4 text-brand-teal" />
                         <span>{course.credits} Credits</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <Clock className="h-4 w-4 text-green-600" />
+                        <Clock className="h-4 w-4 text-brand-teal" />
                         <span>{course.duration}</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4 text-green-600" />
+                        <Calendar className="h-4 w-4 text-brand-teal" />
                         <span className="font-medium">{formatDate(course.upcomingDate)}</span>
                       </div>
                     </div>
@@ -322,19 +322,19 @@ export function CoursesPage() {
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button
                       onClick={() => handleRegister(course.code, course.title)}
-                      className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
+                      className="px-6 py-3 bg-brand-teal text-white font-semibold rounded-lg hover:bg-[#188770] transition-colors"
                     >
                       Register Now
                     </button>
                     <button
                       onClick={() => handleGetQuote(course.code, course.title)}
-                      className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
+                      className="px-6 py-3 bg-brand-teal text-white font-semibold rounded-lg hover:bg-[#188770] transition-colors"
                     >
                       Get Quote
                     </button>
                     <button
                       onClick={() => toggleCourse(course.code)}
-                      className="px-6 py-3 border border-green-600 text-green-600 font-semibold rounded-lg hover:bg-green-50 transition-colors flex items-center gap-2"
+                      className="px-6 py-3 border border-brand-teal text-brand-teal font-semibold rounded-lg hover:bg-teal-50 transition-colors flex items-center gap-2"
                     >
                       {expandedCourse === course.code ? (
                         <>
@@ -365,7 +365,7 @@ export function CoursesPage() {
                           <ul className="space-y-2">
                             {course.targetAudience.map((audience, index) => (
                               <li key={index} className="flex items-start gap-2">
-                                <Users className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
+                                <Users className="h-4 w-4 text-brand-teal mt-1 flex-shrink-0" />
                                 <span className="text-gray-700">{audience}</span>
                               </li>
                             ))}
@@ -394,7 +394,7 @@ export function CoursesPage() {
                           </div>
                           <div className="flex justify-between items-center">
                             <span className="font-medium text-gray-600">Next Course:</span>
-                            <span className="text-green-600 font-medium">{formatDate(course.upcomingDate)}</span>
+                            <span className="text-brand-teal font-medium">{formatDate(course.upcomingDate)}</span>
                           </div>
                         </div>
                       </div>
@@ -408,7 +408,7 @@ export function CoursesPage() {
                             {course.learningOutcomes.map((outcome, index) => (
                               <li key={index} className="flex items-start gap-2">
                                 <div className="bg-green-100 rounded-full p-1 mt-0.5">
-                                  <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                                  <div className="w-2 h-2 bg-brand-teal rounded-full"></div>
                                 </div>
                                 <span className="text-gray-700">{outcome}</span>
                               </li>
@@ -423,7 +423,7 @@ export function CoursesPage() {
                           <ul className="space-y-2">
                             {course.keyTopics.map((topic, index) => (
                               <li key={index} className="flex items-start gap-2">
-                                <BookOpen className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
+                                <BookOpen className="h-4 w-4 text-brand-teal mt-1 flex-shrink-0" />
                                 <span className="text-gray-700">{topic}</span>
                               </li>
                             ))}
@@ -437,7 +437,7 @@ export function CoursesPage() {
                           <ul className="space-y-2">
                             {course.assessment.map((method, index) => (
                               <li key={index} className="flex items-start gap-2">
-                                <Award className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
+                                <Award className="h-4 w-4 text-brand-teal mt-1 flex-shrink-0" />
                                 <span className="text-gray-700">{method}</span>
                               </li>
                             ))}
@@ -448,7 +448,7 @@ export function CoursesPage() {
                       {course.certification && (
                         <div>
                           <h3 className="text-xl font-semibold text-gray-900 mb-3">Certification</h3>
-                          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                          <div className="bg-teal-50 border border-teal-200 rounded-lg p-4">
                             <p className="text-gray-700">{course.certification}</p>
                           </div>
                         </div>
@@ -459,13 +459,13 @@ export function CoursesPage() {
                   <div className="mt-8 text-center">
                     <button
                       onClick={() => handleRegister(course.code, course.title)}
-                      className="px-8 py-3 bg-green-600 text-white font-semibold text-lg rounded-lg hover:bg-green-700 transition-colors"
+                      className="px-8 py-3 bg-brand-teal text-white font-semibold text-lg rounded-lg hover:bg-[#188770] transition-colors"
                     >
                       Register for {course.title}
                     </button>
                     <button
                       onClick={() => handleGetQuote(course.code, course.title)}
-                      className="px-8 py-3 bg-green-600 text-white font-semibold text-lg rounded-lg hover:bg-green-700 transition-colors ml-4"
+                      className="px-8 py-3 bg-brand-teal text-white font-semibold text-lg rounded-lg hover:bg-[#188770] transition-colors ml-4"
                     >
                       Get Quote for {course.title}
                     </button>
@@ -476,7 +476,7 @@ export function CoursesPage() {
           ))}
         </div>
 
-        <div className="mt-16 text-center bg-green-50 rounded-xl p-8">
+        <div className="mt-16 text-center bg-teal-50 rounded-xl p-8">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Ready to Advance Your Career?
           </h2>
@@ -487,7 +487,7 @@ export function CoursesPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => setShowRegistrationForm(true)}
-              className="px-8 py-3 bg-green-600 text-white font-semibold text-lg rounded-lg hover:bg-green-700 transition-colors"
+              className="px-8 py-3 bg-brand-teal text-white font-semibold text-lg rounded-lg hover:bg-[#188770] transition-colors"
             >
               Register Now
             </button>
@@ -496,13 +496,13 @@ export function CoursesPage() {
                 setActionType('quote');
                 setShowRegistrationForm(true);
               }}
-              className="px-8 py-3 bg-green-600 text-white font-semibold text-lg rounded-lg hover:bg-green-700 transition-colors"
+              className="px-8 py-3 bg-brand-teal text-white font-semibold text-lg rounded-lg hover:bg-[#188770] transition-colors"
             >
               Get Quote
             </button>
             <a
               href="/contact"
-              className="px-8 py-3 border border-green-600 text-green-600 font-semibold text-lg rounded-lg hover:bg-green-50 transition-colors"
+              className="px-8 py-3 border border-brand-teal text-brand-teal font-semibold text-lg rounded-lg hover:bg-teal-50 transition-colors"
             >
               Contact Us
             </a>

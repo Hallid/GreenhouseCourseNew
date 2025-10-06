@@ -9,51 +9,40 @@ export function RegistrationSuccess() {
         <div className="bg-white rounded-xl shadow-lg p-8 text-center">
           {/* Success Icon */}
           <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-            <CheckCircle className="h-12 w-12 text-green-600" />
+            <CheckCircle className="h-12 w-12 text-brand-teal" />
           </div>
 
           {/* Success Message */}
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Registration Successful!
+            Thank You!
           </h1>
-          
+
           <p className="text-lg text-gray-600 mb-8">
-            Thank you for registering with Greenhouse Business Development. 
-            Your course registration has been submitted successfully.
+            Your registration has been received successfully. Our team will be in touch with you shortly to discuss the next steps.
           </p>
 
           {/* What's Next */}
-          <div className="bg-green-50 rounded-lg p-6 mb-8">
+          <div className="bg-teal-50 rounded-lg p-6 mb-8">
             <h2 className="text-xl font-semibold text-green-800 mb-4">
               What happens next?
             </h2>
             <div className="text-left space-y-4">
               <div className="flex items-start gap-3">
-                <Mail className="h-5 w-5 text-green-600 mt-0.5" />
+                <Phone className="h-5 w-5 text-brand-teal mt-0.5" />
                 <div>
-                  <h3 className="font-medium text-green-800">Confirmation Email</h3>
-                  <p className="text-sm text-green-700">
-                    You'll receive a confirmation email within the next few minutes with your registration details.
+                  <h3 className="font-medium text-green-800">We'll Contact You</h3>
+                  <p className="text-sm text-[#188770]">
+                    Our team will reach out to you within 24 hours to finalize your enrollment and answer any questions.
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3">
-                <Phone className="h-5 w-5 text-green-600 mt-0.5" />
+                <Calendar className="h-5 w-5 text-brand-teal mt-0.5" />
                 <div>
-                  <h3 className="font-medium text-green-800">Contact from Our Team</h3>
-                  <p className="text-sm text-green-700">
-                    Our course coordinator will contact you within 24 hours to finalize your enrollment.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <Calendar className="h-5 w-5 text-green-600 mt-0.5" />
-                <div>
-                  <h3 className="font-medium text-green-800">Invoice & Course Details</h3>
-                  <p className="text-sm text-green-700">
-                    An invoice will be generated and sent to you along with detailed course information and schedule.
+                  <h3 className="font-medium text-green-800">Course Confirmation</h3>
+                  <p className="text-sm text-[#188770]">
+                    You'll receive all the details about your course, including schedule, materials, and payment information.
                   </p>
                 </div>
               </div>
@@ -81,14 +70,14 @@ export function RegistrationSuccess() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/"
-              className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-brand-teal text-white font-semibold rounded-lg hover:bg-[#188770] transition-colors"
             >
               <ArrowLeft className="h-5 w-5 mr-2" />
               Back to Home
             </Link>
             <Link
               to="/courses"
-              className="inline-flex items-center px-6 py-3 border border-green-600 text-green-600 font-semibold rounded-lg hover:bg-green-50 transition-colors"
+              className="inline-flex items-center px-6 py-3 border border-brand-teal text-brand-teal font-semibold rounded-lg hover:bg-teal-50 transition-colors"
             >
               View Other Courses
             </Link>

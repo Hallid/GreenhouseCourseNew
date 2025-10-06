@@ -60,8 +60,8 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
 
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
-    } else if (!/^[\+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/\s/g, ''))) {
-      newErrors.phone = 'Please enter a valid phone number';
+    } else if (!/^[0-9]{9,15}$/.test(formData.phone.replace(/\s/g, ''))) {
+      newErrors.phone = 'Please enter a valid phone number (9-15 digits)';
     }
 
     if (!formData.courseSelection) {
@@ -293,7 +293,7 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
           {/* Personal Information */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <User className="h-5 w-5 text-green-600" />
+              <User className="h-5 w-5 text-brand-teal" />
               Personal Information
             </h3>
             
@@ -307,7 +307,7 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
                   id="firstName"
                   value={formData.firstName}
                   onChange={(e) => handleInputChange('firstName', e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent ${
                     errors.firstName ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter your first name"
@@ -324,7 +324,7 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
                   id="surname"
                   value={formData.surname}
                   onChange={(e) => handleInputChange('surname', e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent ${
                     errors.surname ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="Enter your surname"
@@ -341,7 +341,7 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
                   id="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent ${
                     errors.email ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="your.email@example.com"
@@ -358,10 +358,10 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
                   id="phone"
                   value={formData.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent ${
                     errors.phone ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="+27 11 123 4567"
+                  placeholder="0780989876"
                 />
                 {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
               </div>
@@ -375,7 +375,7 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
                   id="companyName"
                   value={formData.companyName}
                   onChange={(e) => handleInputChange('companyName', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent"
                   placeholder="Your company name"
                 />
               </div>
@@ -389,7 +389,7 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
                   id="vatNumber"
                   value={formData.vatNumber}
                   onChange={(e) => handleInputChange('vatNumber', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent"
                   placeholder="e.g., 4123456789"
                 />
               </div>
@@ -399,7 +399,7 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
           {/* Course Selection */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Building className="h-5 w-5 text-green-600" />
+              <Building className="h-5 w-5 text-brand-teal" />
               Course Selection
             </h3>
 
@@ -412,7 +412,7 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
                   id="courseSelection"
                   value={formData.courseSelection}
                   onChange={(e) => handleInputChange('courseSelection', e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent ${
                     errors.courseSelection ? 'border-red-500' : 'border-gray-300'
                   }`}
                 >
@@ -437,7 +437,7 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
                   max="50"
                   value={formData.numberOfSeats}
                   onChange={(e) => handleInputChange('numberOfSeats', parseInt(e.target.value) || 1)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-brand-teal focus:border-transparent ${
                     errors.numberOfSeats ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
@@ -447,24 +447,22 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
           </div>
 
           {/* Important Notice */}
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <div className="bg-teal-50 border border-teal-200 rounded-lg p-4">
             <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
+              <CheckCircle className="h-5 w-5 text-brand-teal mt-0.5" />
               <div>
                 <h4 className="font-semibold text-green-800 mb-1">What happens next?</h4>
-                <ul className="text-sm text-green-700 space-y-1">
+                <ul className="text-sm text-[#188770] space-y-1">
                   {actionType === 'quote' ? (
                     <>
-                      <li>• You'll receive a confirmation email with your quote request</li>
                       <li>• Our team will contact you with a detailed quote</li>
                       <li>• A formal quote will be generated and sent to you</li>
                       <li>• You can proceed with registration once you approve the quote</li>
                     </>
                   ) : (
                     <>
-                      <li>• You'll receive a confirmation email with course details</li>
-                      <li>• Our team will contact you to finalize enrollment</li>
-                      <li>• An invoice will be generated for your registration</li>
+                      <li>• Our team will contact you within 24 hours to finalize enrollment</li>
+                      <li>• You'll receive course details, schedule, and payment information</li>
                       <li>• Course materials will be provided upon payment confirmation</li>
                     </>
                   )}
@@ -485,7 +483,7 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+              className="px-8 py-3 bg-brand-teal text-white font-semibold rounded-lg hover:bg-[#188770] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
