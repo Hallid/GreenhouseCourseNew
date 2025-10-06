@@ -50,14 +50,13 @@ export function ContactPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-brand-teal to-brand-green bg-clip-text text-transparent mb-8 text-center">
+            Get In Touch
+          </h2>
+
           {/* Contact Information */}
-          <div>
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-brand-teal to-brand-green bg-clip-text text-transparent mb-8">
-              Get In Touch
-            </h2>
-            
-            <div className="space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
               {/* Email */}
               <div className="flex items-start gap-5 bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-shadow">
                 <div className="bg-gradient-to-br from-brand-teal to-brand-green p-4 rounded-lg">
@@ -135,28 +134,26 @@ export function ContactPage() {
                   </p>
                 </div>
               </div>
-            </div>
-
-            {/* Quick Course Information */}
-            <div className="mt-10 bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-8 shadow-md border border-brand-teal/20">
-              <h3 className="font-bold text-xl text-gray-900 mb-4">
-                Looking for course information?
-              </h3>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Our three accredited courses cover workplace preparation, essential skills,
-                and new venture creation. Each programme is designed to provide practical,
-                applicable knowledge for career advancement.
-              </p>
-              <a
-                href="/courses"
-                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-brand-teal to-brand-green text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
-              >
-                View All Courses
-                <Send className="ml-2 h-5 w-5" />
-              </a>
-            </div>
           </div>
 
+          {/* Quick Course Information */}
+          <div className="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-8 shadow-md border border-brand-teal/20">
+            <h3 className="font-bold text-xl text-gray-900 mb-4">
+              Looking for course information?
+            </h3>
+            <p className="text-gray-700 mb-6 leading-relaxed">
+              Our three accredited courses cover workplace preparation, essential skills,
+              and new venture creation. Each programme is designed to provide practical,
+              applicable knowledge for career advancement.
+            </p>
+            <a
+              href="/courses"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-brand-teal to-brand-green text-white font-semibold rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+            >
+              View All Courses
+              <Send className="ml-2 h-5 w-5" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
