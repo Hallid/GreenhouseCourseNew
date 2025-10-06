@@ -14,7 +14,7 @@ export function Header() {
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center">
             <img
-              src="/WhatsApp Image 2025-10-04 at 21.11.12_b8120d5e.jpg"
+              src="/WhatsApp Image 2025-10-04 at 21.11.12_b8120d5e copy.jpg"
               alt="Greenhouse Business Development"
               className="h-14 w-auto"
             />

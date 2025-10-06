@@ -36,14 +36,14 @@ export function HomePage() {
                 About Greenhouse Business Development
               </h2>
               <p className="text-lg text-gray-700 mb-6">
-                We specialize in delivering high-quality, accredited training programs 
-                designed to enhance workplace readiness and entrepreneurial skills. 
-                Our courses are carefully crafted to meet industry standards and provide 
+                We specialize in delivering high-quality, accredited training programs
+                designed to enhance workplace readiness and entrepreneurial skills.
+                Our courses are carefully crafted to meet industry standards and provide
                 practical, applicable knowledge.
               </p>
               <p className="text-lg text-gray-700 mb-8">
-                Whether you're looking to improve workplace essential skills, prepare 
-                for professional environments, or develop your entrepreneurial ventures, 
+                Whether you're looking to improve workplace essential skills, prepare
+                for professional environments, or develop your entrepreneurial ventures,
                 our accredited programs provide the foundation you need for success.
               </p>
               <Link
@@ -53,6 +53,13 @@ export function HomePage() {
                 Get In Touch
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
+            </div>
+            <div className="flex justify-center">
+              <img
+                src="/Gemini_Generated_Image_cl7ak8cl7ak8cl7a.png"
+                alt="Greenhouse Business Development - Empowering Growth"
+                className="rounded-xl shadow-lg w-full max-w-lg"
+              />
             </div>
           </div>
         </div>
