@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Leaf, Mail, Phone } from 'lucide-react';
 
 export function Footer() {
@@ -25,9 +26,9 @@ export function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><a href="/" className="text-gray-400 hover:text-brand-green-light transition-colors">Home</a></li>
-              <li><a href="/courses" className="text-gray-400 hover:text-brand-green-light transition-colors">Our Courses</a></li>
-              <li><a href="/contact" className="text-gray-400 hover:text-brand-green-light transition-colors">Contact Us</a></li>
+              <li><Link to="/" className="text-gray-400 hover:text-brand-green-light transition-colors">Home</Link></li>
+              <li><Link to="/courses" className="text-gray-400 hover:text-brand-green-light transition-colors">Our Courses</Link></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-brand-green-light transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -51,10 +52,11 @@ export function Footer() {
           <p className="text-gray-400">
             © 2025 Greenhouse Business Development. All rights reserved.
           </p>
-          <a
-            href="/admin"
-            className="absolute bottom-0 right-4 w-2 h-2 bg-gray-700 rounded-full opacity-30 hover:opacity-100 hover:bg-brand-teal transition-all duration-300"
+          <Link
+            to="/admin"
+            className="absolute bottom-2 right-4 w-3 h-3 bg-gray-700 rounded-full opacity-40 hover:opacity-100 hover:bg-brand-teal hover:scale-150 transition-all duration-300 cursor-pointer"
             aria-label="Admin"
+            title="Admin"
           />
         </div>
       </div>
