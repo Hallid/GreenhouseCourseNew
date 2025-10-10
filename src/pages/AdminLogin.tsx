@@ -50,7 +50,7 @@ export function AdminLogin() {
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-        redirectTo: 'https://greenhousebusinessdevelopment.co.za/admin'
+        redirectTo: 'https://greenhousebdacademy.co.za/admin'
       });
 
       if (error) throw error;
