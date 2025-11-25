@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, CreditCard as Edit2, LogOut, RefreshCw, BookOpen, Trash2, Plus } from 'lucide-react';
+import { Calendar, CreditCard as Edit2, LogOut, RefreshCw, BookOpen, Trash2, Plus, BarChart3, FileText } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { CourseEditor } from '../components/CourseEditor';
+import { NotificationCenter } from '../components/NotificationCenter';
+import { AnalyticsDashboard } from '../components/AnalyticsDashboard';
 
 interface CourseData {
   id: string;
@@ -29,6 +31,9 @@ export function AdminDashboard() {
   const [isSaving, setIsSaving] = useState(false);
   const [editingCourse, setEditingCourse] = useState<CourseData | null>(null);
   const [isAddingCourse, setIsAddingCourse] = useState(false);
+  const [activeTab, setActiveTab] = useState<'courses' | 'analytics' | 'registrations'>('courses');
+  const [lastLoginTime, setLastLoginTime] = useState<string>('');
+  const [registrations, setRegistrations] = useState<any[]>([]);
 
   const newCourseTemplate: CourseData = {
     id: '',
@@ -50,12 +55,49 @@ export function AdminDashboard() {
   useEffect(() => {
     checkAuth();
     fetchCourses();
+    fetchRegistrations();
+    updateLastLogin();
   }, []);
 
   const checkAuth = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       navigate('/admin');
+      return;
+    }
+
+    const { data: adminData } = await supabase
+      .from('admin_users')
+      .select('last_dashboard_view')
+      .eq('email', user.email)
+      .maybeSingle();
+
+    if (adminData?.last_dashboard_view) {
+      setLastLoginTime(adminData.last_dashboard_view);
+    }
+  };
+
+  const updateLastLogin = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    await supabase
+      .from('admin_users')
+      .update({ last_dashboard_view: new Date().toISOString() })
+      .eq('email', user.email);
+  };
+
+  const fetchRegistrations = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('registrations')
+        .select('*')
+        .order('submission_date', { ascending: false });
+
+      if (error) throw error;
+      setRegistrations(data || []);
+    } catch (error) {
+      console.error('Error fetching registrations:', error);
     }
   };
 
@@ -170,19 +212,53 @@ export function AdminDashboard() {
         <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Course Management</h1>
-              <p className="text-gray-600 mt-2">Manage your courses and update dates</p>
+              <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+              <p className="text-gray-600 mt-2">Manage courses, view analytics, and track registrations</p>
             </div>
+            <div className="flex items-center gap-3">
+              <NotificationCenter lastLoginTime={lastLoginTime} />
+              <button
+                onClick={handleSignOut}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              >
+                <LogOut className="h-4 w-4" />
+                Sign Out
+              </button>
+            </div>
+          </div>
+
+          <div className="flex gap-2 mt-6 border-b border-gray-200">
             <button
-              onClick={handleSignOut}
-              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              onClick={() => setActiveTab('courses')}
+              className={`px-4 py-2 font-medium transition-colors border-b-2 ${activeTab === 'courses' ? 'text-brand-teal border-brand-teal' : 'text-gray-600 border-transparent hover:text-gray-900'}`}
             >
-              <LogOut className="h-4 w-4" />
-              Sign Out
+              <div className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4" />
+                Courses
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveTab('analytics')}
+              className={`px-4 py-2 font-medium transition-colors border-b-2 ${activeTab === 'analytics' ? 'text-brand-teal border-brand-teal' : 'text-gray-600 border-transparent hover:text-gray-900'}`}
+            >
+              <div className="flex items-center gap-2">
+                <BarChart3 className="h-4 w-4" />
+                Analytics
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveTab('registrations')}
+              className={`px-4 py-2 font-medium transition-colors border-b-2 ${activeTab === 'registrations' ? 'text-brand-teal border-brand-teal' : 'text-gray-600 border-transparent hover:text-gray-900'}`}
+            >
+              <div className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Registrations
+              </div>
             </button>
           </div>
         </div>
 
+        {activeTab === 'courses' && (
         <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
@@ -297,15 +373,68 @@ export function AdminDashboard() {
               ))}
             </div>
           )}
+          <div className="mt-8 bg-teal-50 border border-teal-200 rounded-xl p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Important Note</h3>
+            <p className="text-gray-700">
+              Course dates are the most important information for customers. Make sure to keep them up to date regularly.
+              Changes you make here will be immediately visible on the public courses page.
+            </p>
+          </div>
         </div>
+        )}
 
-        <div className="mt-8 bg-teal-50 border border-teal-200 rounded-xl p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Important Note</h3>
-          <p className="text-gray-700">
-            Course dates are the most important information for customers. Make sure to keep them up to date regularly.
-            Changes you make here will be immediately visible on the public courses page.
-          </p>
-        </div>
+        {activeTab === 'analytics' && (
+          <AnalyticsDashboard />
+        )}
+
+        {activeTab === 'registrations' && (
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">Recent Registrations</h2>
+            {registrations.length === 0 ? (
+              <div className="text-center py-12">
+                <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600">No registrations yet</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-200">
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Name</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Email</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Course</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Seats</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Date</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {registrations.map((reg) => (
+                      <tr key={reg.id} className="border-b border-gray-100 hover:bg-gray-50">
+                        <td className="py-3 px-4 text-gray-900">{reg.name}</td>
+                        <td className="py-3 px-4 text-gray-600">{reg.email}</td>
+                        <td className="py-3 px-4 text-gray-900">{reg.course_selection}</td>
+                        <td className="py-3 px-4 text-gray-600">{reg.number_of_seats || 1}</td>
+                        <td className="py-3 px-4 text-gray-600">
+                          {new Date(reg.submission_date).toLocaleDateString()}
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            reg.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                            reg.status === 'completed' ? 'bg-green-100 text-green-800' :
+                            'bg-gray-100 text-gray-800'
+                          }`}>
+                            {reg.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {(editingCourse || isAddingCourse) && (
