@@ -185,10 +185,27 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
         formDataToSend.append(key, String(registrationData[key]));
       });
 
+      // Send to our webhook endpoint to record in database
+      if (isSupabaseConfigured()) {
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        const cleanUrl = supabaseUrl.replace(/\/$/, '');
+        const webhookUrl = `${cleanUrl}/functions/v1/record-registration-webhook`;
+
+        fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': anonKey,
+            'Authorization': `Bearer ${anonKey}`,
+          },
+          body: JSON.stringify(registrationData)
+        }).catch(err => console.error('Webhook recording error (non-critical):', err));
+      }
+
       // Always try direct Zoho first for better reliability
-      
       const zohoWebhookUrl = "https://flow.zoho.com/796305666/flow/webhook/incoming?zapikey=1001.5f6e0518816fe64954ad30c68eb49cbc.3a175b4e7e2ee05c3da96ce5e3ec08f1&isdebug=false";
-      
+
       try {
         const response = await fetch(zohoWebhookUrl, {
           method: 'POST',
@@ -197,14 +214,11 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
           },
           body: formDataToSend.toString()
         });
-        
-        // If we get any response (even if we can't read it due to CORS), 
-        // assume success since Zoho Flow is receiving the data
+
         navigate('/registration-success');
         return;
-        
+
       } catch (directError) {
-        // If direct submission fails, try no-cors mode
         try {
           await fetch(zohoWebhookUrl, {
             method: 'POST',
@@ -214,12 +228,10 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
             },
             body: formDataToSend.toString()
           });
-          
-          // If no-cors doesn't throw an error, assume success
+
           navigate('/registration-success');
           return;
         } catch (noCorsError) {
-          // Continue to fallback methods
         }
       }
       
