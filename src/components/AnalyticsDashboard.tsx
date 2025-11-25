@@ -49,16 +49,22 @@ export function AnalyticsDashboard() {
       setIsLoading(true);
 
       const now = new Date();
+      now.setHours(23, 59, 59, 999);
+
       const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      weekAgo.setHours(0, 0, 0, 0);
 
       let startDate: Date;
       const endDate = customEndDate ? new Date(customEndDate) : now;
+      endDate.setHours(23, 59, 59, 999);
 
       if (customStartDate && customEndDate) {
         startDate = new Date(customStartDate);
+        startDate.setHours(0, 0, 0, 0);
       } else {
         const daysAgo = timeRange === 'all' ? 3650 : parseInt(timeRange);
-        startDate = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
+        startDate = new Date(now.getTime() - (daysAgo - 1) * 24 * 60 * 60 * 1000);
+        startDate.setHours(0, 0, 0, 0);
       }
 
       const [registrationsResult, coursesResult] = await Promise.all([
@@ -114,8 +120,8 @@ export function AnalyticsDashboard() {
         },
       ];
 
-      const daysDiff = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-      const numDays = Math.min(daysDiff, timeRange === 'all' ? 365 : parseInt(timeRange));
+      const daysDiff = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+      const numDays = customStartDate && customEndDate ? daysDiff : (timeRange === 'all' ? 365 : parseInt(timeRange));
       const skipFactor = numDays > 60 ? Math.ceil(numDays / 30) : numDays > 30 ? 2 : 1;
 
       const dateRange = Array.from({ length: numDays }, (_, i) => {
