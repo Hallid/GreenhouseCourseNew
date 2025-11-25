@@ -34,7 +34,7 @@ Deno.serve(async (req: Request) => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     const webhookData = await req.json();
-    console.log("📨 Received webhook data:", webhookData);
+    console.log("📨 Received webhook data:", JSON.stringify(webhookData, null, 2));
 
     const timestamp = new Date().toISOString();
 
@@ -151,16 +151,40 @@ Deno.serve(async (req: Request) => {
 
     const zohoWebhookUrl = "https://flow.zoho.com/796305666/flow/webhook/incoming?zapikey=1001.5f6e0518816fe64954ad30c68eb49cbc.3a175b4e7e2ee05c3da96ce5e3ec08f1&isdebug=false";
 
+    const zohoPayload = {
+      first_name: webhookData.first_name || '',
+      surname: webhookData.surname || '',
+      full_name: fullName,
+      email: webhookData.email || '',
+      phone: webhookData.phone || '',
+      company_name: webhookData.company_name || '',
+      vat_number: webhookData.vat_number || '',
+      course_selection: webhookData.course_selection || '',
+      number_of_seats: webhookData.number_of_seats || 1,
+      action_type: webhookData.action_type || 'register',
+      submission_date: webhookData.submission_date || timestamp
+    };
+
+    console.log("📦 Zoho payload:", JSON.stringify(zohoPayload, null, 2));
+
     try {
       const zohoResponse = await fetch(zohoWebhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(webhookData),
+        body: JSON.stringify(zohoPayload),
       });
 
       console.log("📡 Zoho Flow response status:", zohoResponse.status);
+
+      let zohoResponseText = "";
+      try {
+        zohoResponseText = await zohoResponse.text();
+        console.log("📡 Zoho Flow response body:", zohoResponseText);
+      } catch (e) {
+        console.log("⚠️ Could not read Zoho response body");
+      }
 
       if (zohoResponse.ok) {
         console.log("✅ Data forwarded to Zoho Flow successfully");
