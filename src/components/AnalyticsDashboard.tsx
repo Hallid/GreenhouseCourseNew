@@ -13,6 +13,7 @@ interface AnalyticsData {
   statusBreakdown: { name: string; value: number; percentage: number }[];
   revenueOverTime: { date: string; invoiced: number; paid: number; total: number }[];
   coursePerformance: any[];
+  coursePopularity: { name: string; value: number; code: string }[];
   funnelData: { stage: string; value: number; percentage: number; dropOff: number }[];
 }
 
@@ -30,6 +31,7 @@ export function AnalyticsDashboard() {
     statusBreakdown: [],
     revenueOverTime: [],
     coursePerformance: [],
+    coursePopularity: [],
     funnelData: [],
   });
   const [isLoading, setIsLoading] = useState(true);
@@ -178,6 +180,23 @@ export function AnalyticsDashboard() {
         courseCodeMap[c.course_code] = c.course_name;
       });
 
+      const courseCounts: Record<string, number> = {};
+      filteredRegistrations.forEach(reg => {
+        courseCounts[reg.course_selection] = (courseCounts[reg.course_selection] || 0) + 1;
+      });
+
+      const coursePopularity = Object.entries(courseCounts)
+        .map(([code, value]) => {
+          const course = courses.find(c => c.course_code === code);
+          return {
+            code,
+            name: course?.course_name || code,
+            value,
+          };
+        })
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 3);
+
       const uniqueCourses = [...new Set(filteredRegistrations.map(r => r.course_selection))];
 
       const coursePerformance = dateRange.map(date => {
@@ -214,6 +233,7 @@ export function AnalyticsDashboard() {
         statusBreakdown,
         revenueOverTime,
         coursePerformance,
+        coursePopularity,
         funnelData,
       });
     } catch (error) {
@@ -688,55 +708,98 @@ export function AnalyticsDashboard() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm p-6 border border-green-100">
-        <h3 className="text-lg font-semibold bg-gradient-to-r from-brand-teal to-brand-green bg-clip-text text-transparent mb-4">
-          Course Performance Over Time
-        </h3>
-        <ResponsiveContainer width="100%" height={350}>
-          <ComposedChart data={analytics.coursePerformance}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-            <XAxis
-              dataKey="date"
-              stroke="#9ca3af"
-              style={{ fontSize: '10px' }}
-              angle={analytics.coursePerformance.length > 15 ? -45 : 0}
-              textAnchor={analytics.coursePerformance.length > 15 ? 'end' : 'middle'}
-              height={analytics.coursePerformance.length > 15 ? 60 : 30}
-            />
-            <YAxis stroke="#9ca3af" style={{ fontSize: '12px' }} />
-            <Tooltip
-              content={({ active, payload }) => {
-                if (active && payload && payload.length) {
-                  return (
-                    <div className="bg-white p-3 shadow-lg rounded-lg border border-gray-200 max-w-xs">
-                      <p className="text-sm font-semibold text-gray-700 mb-2">{payload[0].payload.date}</p>
-                      {payload.map((entry: any, index: number) => (
-                        <p key={index} className="text-xs font-semibold" style={{ color: entry.color }}>
-                          {entry.name}: {entry.value}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-green-100">
+          <h3 className="text-lg font-semibold bg-gradient-to-r from-brand-teal to-brand-green bg-clip-text text-transparent mb-4">
+            Course Popularity - Top 3
+          </h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={analytics.coursePopularity} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis type="number" stroke="#9ca3af" style={{ fontSize: '12px' }} />
+              <YAxis
+                type="category"
+                dataKey="code"
+                stroke="#9ca3af"
+                style={{ fontSize: '11px' }}
+                width={60}
+              />
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    return (
+                      <div className="bg-white p-3 shadow-lg rounded-lg border border-gray-200">
+                        <p className="text-sm font-semibold text-gray-700">{payload[0].payload.name}</p>
+                        <p className="text-sm text-brand-teal font-bold">
+                          Registrations: {payload[0].value}
                         </p>
-                      ))}
-                    </div>
-                  );
-                }
-                return null;
-              }}
-            />
-            <Legend wrapperStyle={{ fontSize: '12px' }} />
-            {Object.keys(analytics.coursePerformance[0] || {})
-              .filter(key => key !== 'date' && !key.includes('_paid'))
-              .slice(0, 6)
-              .map((courseCode, index) => (
-                <Bar
-                  key={courseCode}
-                  dataKey={courseCode}
-                  stackId="courses"
-                  fill={COLORS[index % COLORS.length]}
-                  name={courseCode}
-                  radius={index === 0 ? [0, 0, 0, 0] : undefined}
-                />
-              ))}
-          </ComposedChart>
-        </ResponsiveContainer>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+              />
+              <Bar dataKey="value" radius={[0, 8, 8, 0]}>
+                {analytics.coursePopularity.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-green-100">
+          <h3 className="text-lg font-semibold bg-gradient-to-r from-brand-teal to-brand-green bg-clip-text text-transparent mb-4">
+            Course Performance Over Time
+          </h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={analytics.coursePerformance}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis
+                dataKey="date"
+                stroke="#9ca3af"
+                style={{ fontSize: '10px' }}
+                angle={analytics.coursePerformance.length > 15 ? -45 : 0}
+                textAnchor={analytics.coursePerformance.length > 15 ? 'end' : 'middle'}
+                height={analytics.coursePerformance.length > 15 ? 60 : 30}
+              />
+              <YAxis stroke="#9ca3af" style={{ fontSize: '12px' }} />
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    return (
+                      <div className="bg-white p-3 shadow-lg rounded-lg border border-gray-200">
+                        <p className="text-sm font-semibold text-gray-700 mb-2">{payload[0].payload.date}</p>
+                        {payload.map((entry: any, index: number) => (
+                          <p key={index} className="text-xs font-semibold" style={{ color: entry.color }}>
+                            {entry.name}: {entry.value}
+                          </p>
+                        ))}
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+              />
+              <Legend wrapperStyle={{ fontSize: '12px' }} />
+              {Object.keys(analytics.coursePerformance[0] || {})
+                .filter(key => key !== 'date' && !key.includes('_paid'))
+                .slice(0, 3)
+                .map((courseCode, index) => (
+                  <Line
+                    key={courseCode}
+                    type="monotone"
+                    dataKey={courseCode}
+                    stroke={COLORS[index % COLORS.length]}
+                    strokeWidth={2}
+                    dot={{ fill: COLORS[index % COLORS.length], r: 3 }}
+                    activeDot={{ r: 5 }}
+                    name={courseCode}
+                  />
+                ))}
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );
