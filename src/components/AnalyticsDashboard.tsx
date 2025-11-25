@@ -6,18 +6,26 @@ import { supabase } from '../lib/supabase';
 interface AnalyticsData {
   totalSignups: number;
   weeklySignups: number;
+  totalInvoiced: number;
+  totalPaid: number;
+  conversionRate: number;
   coursePopularity: { name: string; value: number; code: string }[];
   weeklyTrend: { date: string; signups: number }[];
   recentActivity: { date: string; count: number }[];
+  statusBreakdown: { name: string; value: number; percentage: number }[];
 }
 
 export function AnalyticsDashboard() {
   const [analytics, setAnalytics] = useState<AnalyticsData>({
     totalSignups: 0,
     weeklySignups: 0,
+    totalInvoiced: 0,
+    totalPaid: 0,
+    conversionRate: 0,
     coursePopularity: [],
     weeklyTrend: [],
     recentActivity: [],
+    statusBreakdown: [],
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -48,6 +56,17 @@ export function AnalyticsDashboard() {
       const weeklySignups = registrations.filter(
         r => new Date(r.submission_date) >= weekAgo
       ).length;
+
+      const totalInvoiced = registrations.filter(r => r.status === 'invoiced').length;
+      const totalPaid = registrations.filter(r => r.status === 'paid').length;
+      const pendingCount = registrations.filter(r => r.status === 'pending').length;
+      const conversionRate = totalSignups > 0 ? Math.round((totalPaid / totalSignups) * 100) : 0;
+
+      const statusBreakdown = [
+        { name: 'Pending', value: pendingCount, percentage: totalSignups > 0 ? Math.round((pendingCount / totalSignups) * 100) : 0 },
+        { name: 'Invoiced', value: totalInvoiced, percentage: totalSignups > 0 ? Math.round((totalInvoiced / totalSignups) * 100) : 0 },
+        { name: 'Paid', value: totalPaid, percentage: totalSignups > 0 ? Math.round((totalPaid / totalSignups) * 100) : 0 },
+      ];
 
       const courseCounts: Record<string, number> = {};
       registrations.forEach(reg => {
@@ -111,9 +130,13 @@ export function AnalyticsDashboard() {
       setAnalytics({
         totalSignups,
         weeklySignups,
+        totalInvoiced,
+        totalPaid,
+        conversionRate,
         coursePopularity,
         weeklyTrend,
         recentActivity,
+        statusBreakdown,
       });
     } catch (error) {
       console.error('Error fetching analytics:', error);
@@ -123,6 +146,7 @@ export function AnalyticsDashboard() {
   };
 
   const COLORS = ['#1BA098', '#16A34A', '#2563EB', '#9333EA', '#EA580C'];
+  const STATUS_COLORS = ['#FCD34D', '#3B82F6', '#10B981'];
 
   if (isLoading) {
     return (
@@ -135,8 +159,8 @@ export function AnalyticsDashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl p-6 text-white shadow-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
           <div className="flex items-center justify-between mb-2">
             <Users className="h-8 w-8 opacity-80" />
             <TrendingUp className="h-5 w-5 opacity-80" />
@@ -145,28 +169,73 @@ export function AnalyticsDashboard() {
           <p className="text-4xl font-bold">{analytics.totalSignups}</p>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg">
+        <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
           <div className="flex items-center justify-between mb-2">
             <Calendar className="h-8 w-8 opacity-80" />
             <Activity className="h-5 w-5 opacity-80" />
           </div>
-          <p className="text-blue-100 text-sm font-medium mb-1">This Week</p>
+          <p className="text-green-100 text-sm font-medium mb-1">This Week</p>
           <p className="text-4xl font-bold">{analytics.weeklySignups}</p>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white shadow-lg">
+        <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
+          <div className="flex items-center justify-between mb-2">
+            <Activity className="h-8 w-8 opacity-80" />
+            <TrendingUp className="h-5 w-5 opacity-80" />
+          </div>
+          <p className="text-yellow-100 text-sm font-medium mb-1">Pending</p>
+          <p className="text-4xl font-bold">{analytics.statusBreakdown.find(s => s.name === 'Pending')?.value || 0}</p>
+        </div>
+
+        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
           <div className="flex items-center justify-between mb-2">
             <BookOpen className="h-8 w-8 opacity-80" />
             <TrendingUp className="h-5 w-5 opacity-80" />
           </div>
-          <p className="text-purple-100 text-sm font-medium mb-1">Popular Courses</p>
-          <p className="text-4xl font-bold">{analytics.coursePopularity.length}</p>
+          <p className="text-blue-100 text-sm font-medium mb-1">Invoiced</p>
+          <p className="text-4xl font-bold">{analytics.totalInvoiced}</p>
+        </div>
+
+        <div className="bg-gradient-to-br from-emerald-600 to-green-700 rounded-xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
+          <div className="flex items-center justify-between mb-2">
+            <TrendingUp className="h-8 w-8 opacity-80" />
+            <span className="text-xl font-bold">{analytics.conversionRate}%</span>
+          </div>
+          <p className="text-emerald-100 text-sm font-medium mb-1">Paid</p>
+          <p className="text-4xl font-bold">{analytics.totalPaid}</p>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-sm p-6 border border-green-100">
+        <h3 className="text-lg font-semibold bg-gradient-to-r from-brand-teal to-brand-green bg-clip-text text-transparent mb-4">Conversion Funnel</h3>
+        <div className="grid grid-cols-3 gap-4">
+          {analytics.statusBreakdown.map((status, index) => (
+            <div key={status.name} className="text-center">
+              <div className={`mx-auto w-full h-32 rounded-lg flex flex-col items-center justify-center shadow-md transition-all hover:shadow-lg ${
+                status.name === 'Pending' ? 'bg-gradient-to-br from-yellow-100 to-yellow-200' :
+                status.name === 'Invoiced' ? 'bg-gradient-to-br from-blue-100 to-blue-200' :
+                'bg-gradient-to-br from-green-100 to-green-200'
+              }`}>
+                <p className={`text-4xl font-bold mb-1 ${
+                  status.name === 'Pending' ? 'text-yellow-800' :
+                  status.name === 'Invoiced' ? 'text-blue-800' :
+                  'text-green-800'
+                }`}>{status.value}</p>
+                <p className={`text-sm font-medium ${
+                  status.name === 'Pending' ? 'text-yellow-700' :
+                  status.name === 'Invoiced' ? 'text-blue-700' :
+                  'text-green-700'
+                }`}>{status.percentage}%</p>
+              </div>
+              <p className="mt-3 text-sm font-semibold text-gray-700">{status.name}</p>
+            </div>
+          ))}
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Weekly Sign-up Trend</h3>
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-green-100">
+          <h3 className="text-lg font-semibold bg-gradient-to-r from-brand-teal to-brand-green bg-clip-text text-transparent mb-4">Weekly Sign-up Trend</h3>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={analytics.weeklyTrend}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -195,8 +264,8 @@ export function AnalyticsDashboard() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Course Popularity</h3>
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-green-100">
+          <h3 className="text-lg font-semibold bg-gradient-to-r from-brand-teal to-brand-green bg-clip-text text-transparent mb-4">Course Popularity</h3>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={analytics.coursePopularity}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -223,8 +292,8 @@ export function AnalyticsDashboard() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">30-Day Activity</h3>
+      <div className="bg-white rounded-xl shadow-sm p-6 border border-green-100">
+        <h3 className="text-lg font-semibold bg-gradient-to-r from-brand-teal to-brand-green bg-clip-text text-transparent mb-4">30-Day Activity</h3>
         <ResponsiveContainer width="100%" height={200}>
           <LineChart data={analytics.recentActivity}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />

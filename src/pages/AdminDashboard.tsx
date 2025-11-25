@@ -101,6 +101,22 @@ export function AdminDashboard() {
     }
   };
 
+  const handleStatusChange = async (registrationId: string, newStatus: string) => {
+    try {
+      const { error } = await supabase
+        .from('registrations')
+        .update({ status: newStatus })
+        .eq('id', registrationId);
+
+      if (error) throw error;
+
+      await fetchRegistrations();
+    } catch (error: any) {
+      console.error('Error updating status:', error);
+      alert(`Failed to update status: ${error.message}`);
+    }
+  };
+
   const fetchCourses = async () => {
     try {
       setIsLoading(true);
@@ -207,19 +223,19 @@ export function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-teal-50 to-emerald-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-green-100 p-6 mb-8">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-              <p className="text-gray-600 mt-2">Manage courses, view analytics, and track registrations</p>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-brand-teal to-brand-green bg-clip-text text-transparent">Admin Dashboard</h1>
+              <p className="text-gray-700 mt-2">Manage courses, view analytics, and track registrations</p>
             </div>
             <div className="flex items-center gap-3">
               <NotificationCenter lastLoginTime={lastLoginTime} />
               <button
                 onClick={handleSignOut}
-                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all shadow-md hover:shadow-lg"
               >
                 <LogOut className="h-4 w-4" />
                 Sign Out
@@ -267,7 +283,7 @@ export function AdminDashboard() {
             </div>
             <button
               onClick={() => setIsAddingCourse(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-brand-teal text-white rounded-lg hover:bg-[#188770] transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-brand-teal to-brand-green text-white rounded-lg hover:from-[#188770] hover:to-[#2f8b5f] transition-all shadow-md hover:shadow-lg"
             >
               <Plus className="h-4 w-4" />
               Add New Course
@@ -283,7 +299,7 @@ export function AdminDashboard() {
               </p>
               <button
                 onClick={() => setIsAddingCourse(true)}
-                className="px-4 py-2 bg-brand-teal text-white rounded-lg hover:bg-[#188770] transition-colors"
+                className="px-4 py-2 bg-gradient-to-r from-brand-teal to-brand-green text-white rounded-lg hover:from-[#188770] hover:to-[#2f8b5f] transition-all shadow-md hover:shadow-lg"
               >
                 Add Course
               </button>
@@ -419,13 +435,20 @@ export function AdminDashboard() {
                           {new Date(reg.submission_date).toLocaleDateString()}
                         </td>
                         <td className="py-3 px-4">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            reg.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                            reg.status === 'completed' ? 'bg-green-100 text-green-800' :
-                            'bg-gray-100 text-gray-800'
-                          }`}>
-                            {reg.status}
-                          </span>
+                          <select
+                            value={reg.status}
+                            onChange={(e) => handleStatusChange(reg.id, e.target.value)}
+                            className={`px-3 py-1.5 rounded-lg text-sm font-medium border-2 transition-all cursor-pointer ${
+                              reg.status === 'pending' ? 'bg-yellow-50 text-yellow-800 border-yellow-200 hover:border-yellow-300' :
+                              reg.status === 'invoiced' ? 'bg-blue-50 text-blue-800 border-blue-200 hover:border-blue-300' :
+                              reg.status === 'paid' ? 'bg-green-50 text-green-800 border-green-200 hover:border-green-300' :
+                              'bg-gray-50 text-gray-800 border-gray-200 hover:border-gray-300'
+                            }`}
+                          >
+                            <option value="pending">Pending</option>
+                            <option value="invoiced">Invoiced</option>
+                            <option value="paid">Paid</option>
+                          </select>
                         </td>
                       </tr>
                     ))}
