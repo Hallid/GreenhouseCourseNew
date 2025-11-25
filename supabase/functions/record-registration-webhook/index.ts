@@ -147,10 +147,34 @@ Deno.serve(async (req: Request) => {
       }
     }
 
+    console.log("🚀 Forwarding to Zoho Flow...");
+
+    const zohoWebhookUrl = "https://flow.zoho.com/796305666/flow/webhook/incoming?zapikey=1001.5f6e0518816fe64954ad30c68eb49cbc.3a175b4e7e2ee05c3da96ce5e3ec08f1&isdebug=false";
+
+    try {
+      const zohoResponse = await fetch(zohoWebhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(webhookData),
+      });
+
+      console.log("📡 Zoho Flow response status:", zohoResponse.status);
+
+      if (zohoResponse.ok) {
+        console.log("✅ Data forwarded to Zoho Flow successfully");
+      } else {
+        console.warn("⚠️ Zoho Flow returned non-OK status:", zohoResponse.status);
+      }
+    } catch (zohoError) {
+      console.error("⚠️ Failed to forward to Zoho Flow (non-critical):", zohoError);
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
-        message: "Registration recorded successfully",
+        message: "Registration recorded successfully and forwarded to Zoho Flow",
         registration_id: registration.id,
         timestamp: timestamp
       }),

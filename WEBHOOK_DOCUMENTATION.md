@@ -19,6 +19,7 @@ This webhook endpoint receives form registration data and automatically:
 - Updates analytics metrics for the admin dashboard
 - Creates admin notifications for new sign-ups
 - Tracks quote/invoice requests separately
+- **Forwards the data to Zoho Flow webhook** (maintains your existing workflow)
 
 ## Request Format
 
@@ -59,7 +60,7 @@ This webhook endpoint receives form registration data and automatically:
 ```json
 {
   "success": true,
-  "message": "Registration recorded successfully",
+  "message": "Registration recorded successfully and forwarded to Zoho Flow",
   "registration_id": "uuid-here",
   "timestamp": "2025-11-25T10:30:00.000Z"
 }
@@ -96,6 +97,8 @@ This webhook endpoint receives form registration data and automatically:
 
 4. **Quote Tracking** (if action_type = "quote"): A quote request record is created for follow-up
 
+5. **Forwarded to Zoho Flow**: The original webhook data is forwarded to your Zoho Flow webhook automatically, maintaining your existing workflow
+
 ## Dashboard Impact
 
 After sending data to this webhook, the admin dashboard will immediately show:
@@ -123,10 +126,11 @@ curl -X POST https://bvjedjvdqqjjqdgxqwqs.supabase.co/functions/v1/record-regist
 
 ## Integration Notes
 
-- This webhook operates **independently** of the Zoho Flow webhook
-- Both webhooks can receive the same data without interference
-- The registration form automatically sends to both endpoints
-- No changes to the existing Zoho Flow integration are required
+- This webhook receives data FIRST, records it in the database, then forwards to Zoho Flow
+- This ensures your admin dashboard is always up-to-date
+- Zoho Flow receives the exact same data it was receiving before
+- If Zoho Flow is down or unreachable, the registration is still recorded in your database
+- The registration form sends to this single webhook endpoint
 - Timestamps are automatically recorded for every registration
 
 ## Security
@@ -140,6 +144,8 @@ curl -X POST https://bvjedjvdqqjjqdgxqwqs.supabase.co/functions/v1/record-regist
 ## Error Handling
 
 The webhook is designed to be fault-tolerant:
-- If the webhook fails, the Zoho Flow integration is unaffected
-- Errors are logged but don't block the registration process
-- The response indicates success/failure for monitoring purposes
+- Database operations happen first to ensure data is recorded
+- If Zoho Flow is unreachable, the registration is still saved in the database
+- Zoho Flow forwarding errors are logged but don't cause the webhook to fail
+- This ensures registrations are never lost, even if Zoho Flow is temporarily down
+- The response indicates overall success/failure for monitoring purposes
