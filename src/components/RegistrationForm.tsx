@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, User, Mail, Phone, Building, Users, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { isSupabaseConfigured } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 interface RegistrationFormProps {
   selectedCourse?: string;
@@ -76,86 +76,9 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
     return Object.keys(newErrors).length === 0;
   };
 
-  const sendDirectToZoho = async (data: any) => {
-    const zohoWebhookUrl = "https://flow.zoho.com/796305666/flow/webhook/incoming?zapikey=1001.5f6e0518816fe64954ad30c68eb49cbc.3a175b4e7e2ee05c3da96ce5e3ec08f1&isdebug=false";
-    
-    console.log('🚀 Sending directly to Zoho Flow:', data);
-    
-    try {
-      const response = await fetch(zohoWebhookUrl, {
-        method: 'POST',
-        mode: 'no-cors', // This bypasses CORS restrictions
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
-
-      console.log('📡 Zoho Flow response status:', response.status);
-      console.log('📡 Zoho Flow response type:', response.type);
-      
-      // With no-cors mode, we can't read the response body
-      // But if the request doesn't throw an error, it likely succeeded
-      if (response.type === 'opaque') {
-        console.log('✅ Request sent successfully (opaque response due to no-cors mode)');
-        return { 
-          response: { ok: true, status: 200 }, 
-          responseData: 'Request sent successfully (CORS bypass mode)' 
-        };
-      }
-      
-      let responseData;
-      const contentType = response.headers.get('content-type');
-      
-      if (contentType && contentType.includes('application/json')) {
-        responseData = await response.json();
-      } else {
-        responseData = await response.text();
-      }
-      
-      console.log('📋 Zoho Flow response:', responseData);
-      
-      return { response, responseData };
-    } catch (fetchError) {
-      console.error('🚨 Direct Zoho fetch error:', fetchError);
-      
-      // If it's a CORS error, try a different approach
-      if (fetchError.message.includes('CORS') || fetchError.message.includes('fetch')) {
-        console.log('🔄 Trying alternative method due to CORS...');
-        
-        // Create a form and submit it (this bypasses CORS)
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = zohoWebhookUrl;
-        form.target = '_blank';
-        form.style.display = 'none';
-        
-        // Add data as form fields
-        Object.keys(data).forEach(key => {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = key;
-          input.value = typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key];
-          form.appendChild(input);
-        });
-        
-        document.body.appendChild(form);
-        form.submit();
-        document.body.removeChild(form);
-        
-        return { 
-          response: { ok: true, status: 200 }, 
-          responseData: 'Submitted via form method (CORS workaround)' 
-        };
-      }
-      
-      throw fetchError;
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -163,10 +86,33 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
     setIsSubmitting(true);
 
     try {
+      const fullName = `${formData.firstName} ${formData.surname}`.trim();
+
+      const { data: insertedRegistration, error: insertError } = await supabase
+        .from('registrations')
+        .insert({
+          name: fullName,
+          email: formData.email,
+          phone: formData.phone,
+          company_name: formData.companyName || null,
+          course_selection: formData.courseSelection,
+          number_of_seats: formData.numberOfSeats,
+          status: 'pending',
+        })
+        .select()
+        .single();
+
+      if (insertError) {
+        console.error('Error saving to Supabase:', insertError);
+        throw insertError;
+      }
+
+      console.log('✅ Saved to Supabase:', insertedRegistration);
+
       const registrationData = {
         first_name: formData.firstName,
         surname: formData.surname,
-        full_name: `${formData.firstName} ${formData.surname}`.trim(),
+        full_name: fullName,
         email: formData.email,
         phone: formData.phone,
         company_name: formData.companyName || null,
@@ -174,91 +120,36 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
         course_selection: formData.courseSelection,
         number_of_seats: formData.numberOfSeats,
         action_type: actionType,
-        submission_date: new Date().toISOString()
+        submission_date: new Date().toISOString(),
+        registration_id: insertedRegistration.id
       };
 
-      // Submit registration data
-      
-      // Convert to form data
       const formDataToSend = new URLSearchParams();
       Object.keys(registrationData).forEach(key => {
         formDataToSend.append(key, String(registrationData[key]));
       });
 
-      // Always try direct Zoho first for better reliability
-      
       const zohoWebhookUrl = "https://flow.zoho.com/796305666/flow/webhook/incoming?zapikey=1001.5f6e0518816fe64954ad30c68eb49cbc.3a175b4e7e2ee05c3da96ce5e3ec08f1&isdebug=false";
-      
+
       try {
-        const response = await fetch(zohoWebhookUrl, {
+        await fetch(zohoWebhookUrl, {
           method: 'POST',
+          mode: 'no-cors',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: formDataToSend.toString()
         });
-        
-        // If we get any response (even if we can't read it due to CORS), 
-        // assume success since Zoho Flow is receiving the data
-        navigate('/registration-success');
-        return;
-        
-      } catch (directError) {
-        // If direct submission fails, try no-cors mode
-        try {
-          await fetch(zohoWebhookUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: formDataToSend.toString()
-          });
-          
-          // If no-cors doesn't throw an error, assume success
-          navigate('/registration-success');
-          return;
-        } catch (noCorsError) {
-          // Continue to fallback methods
-        }
+        console.log('✅ Forwarded to Zoho Flow');
+      } catch (zohoError) {
+        console.error('Zoho Flow error (non-critical):', zohoError);
       }
-      
-      // Fallback to Supabase Edge Function if configured
-      if (isSupabaseConfigured()) {
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-        const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-        
-        // Ensure URL doesn't have trailing slash
-        const cleanUrl = supabaseUrl.replace(/\/$/, '');
-        const edgeFunctionUrl = `${cleanUrl}/functions/v1/forward-to-zoho`;
-        
-        const response = await fetch(edgeFunctionUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': anonKey,
-            'Authorization': `Bearer ${anonKey}`,
-          },
-          body: JSON.stringify(registrationData)
-        });
 
-        if (response.ok) {
-          const responseData = await response.json();
-          navigate('/registration-success');
-        } else {
-          const errorData = await response.json();
-          throw new Error(`Edge Function failed: ${errorData.error || 'Unknown error'}`);
-        }
-      } else {
-        // If we get here, assume the registration was successful
-        // since Zoho Flow is likely receiving the data even if we can't confirm it
-        navigate('/registration-success');
-      }
-    } catch (error) {
-      // Even if there's an error, the registration might have gone through
-      // Show a more optimistic message
-      alert('Registration submitted! If you don\'t receive a confirmation email within 24 hours, please contact us at greenhousehallid@gmail.com to confirm your registration.');
       navigate('/registration-success');
+
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('Failed to submit registration. Please try again or contact us at greenhousehallid@gmail.com');
     } finally {
       setIsSubmitting(false);
     }
