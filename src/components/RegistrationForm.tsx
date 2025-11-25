@@ -100,11 +100,21 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
           status: 'pending',
         })
         .select()
-        .single();
+        .maybeSingle();
 
       if (insertError) {
-        console.error('Error saving to Supabase:', insertError);
-        throw insertError;
+        console.error('Supabase insert error:', insertError);
+        console.error('Error details:', {
+          message: insertError.message,
+          details: insertError.details,
+          hint: insertError.hint,
+          code: insertError.code
+        });
+        throw new Error(`Database error: ${insertError.message}`);
+      }
+
+      if (!insertedRegistration) {
+        throw new Error('No data returned from insert');
       }
 
       console.log('✅ Saved to Supabase:', insertedRegistration);
@@ -126,7 +136,10 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
 
       const formDataToSend = new URLSearchParams();
       Object.keys(registrationData).forEach(key => {
-        formDataToSend.append(key, String(registrationData[key]));
+        const value = registrationData[key as keyof typeof registrationData];
+        if (value !== null && value !== undefined) {
+          formDataToSend.append(key, String(value));
+        }
       });
 
       const zohoWebhookUrl = "https://flow.zoho.com/796305666/flow/webhook/incoming?zapikey=1001.5f6e0518816fe64954ad30c68eb49cbc.3a175b4e7e2ee05c3da96ce5e3ec08f1&isdebug=false";
@@ -147,9 +160,10 @@ export function RegistrationForm({ selectedCourse = '', actionType = 'register',
 
       navigate('/registration-success');
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Registration error:', error);
-      alert('Failed to submit registration. Please try again or contact us at greenhousehallid@gmail.com');
+      const errorMessage = error?.message || 'Unknown error occurred';
+      alert(`Failed to submit registration: ${errorMessage}\n\nPlease try again or contact us at greenhousehallid@gmail.com`);
     } finally {
       setIsSubmitting(false);
     }
